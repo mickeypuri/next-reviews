@@ -6,6 +6,11 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
+export async function generateMetadata({params : {slug}}) {
+  const { title } = await getReview(slug);
+  return { title }
+}
+
 export default async function ReviewPage({params : {slug}}) {
   const {date, image, body, title } = await getReview(slug);
   console.log("[ReviewPage] rendering", slug);
