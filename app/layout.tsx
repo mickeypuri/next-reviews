@@ -12,7 +12,7 @@ export const metadata = {
     default: "Indie Gamer",
     template: "%s | Indie Gamer"
   },
-  description: "Only the best Indie Games, reviewed for you",
+  description: "Only the best Indie Games, reviewed for you daily",
   keywords: ["indie", "games"]
 };
 
