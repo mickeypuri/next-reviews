@@ -15,10 +15,10 @@ export async function generateMetadata({params : {slug}}) {
 }
 
 export default async function ReviewPage({params : {slug}}) {
+  console.log("[ReviewPage] rendering", slug);
   const review = await getReview(slug);
   const {date, image, body, title, subtitle } = review;
 
-  //console.log("[ReviewPage] rendering", review);
 
   return (
     <>

@@ -45,6 +45,7 @@ async function fetchReviews(parameters) {
   //console.log("[fetchReviews]:", url);
   const response = await fetch(url);
   if (!response.ok) {
+    console.log(`Error: ${JSON.stringify(response)}`);
     throw new Error(`CMS returned ${response.status} for ${url}`);
   }
   return await response.json();

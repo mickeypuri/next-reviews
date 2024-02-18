@@ -5,9 +5,8 @@ import Image from "next/image";
 
 export default async function HomePage() {
   const reviews = await getReviews(3);
-  //console.log(JSON.stringify(reviews))
-
-  //console.log("[Homepage] rendering");
+  console.log("[HomePage] rendering:", 
+    reviews.map((review) => review.slug).join(", "));
   return (
     <>
       <Heading>Indie Gamer</Heading>
