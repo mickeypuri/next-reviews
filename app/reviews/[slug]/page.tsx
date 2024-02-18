@@ -1,11 +1,13 @@
+import Image from "next/image";
 import Heading from "@/components/Heading";
 import ShareLinkButton from "@/components/ShareLinkButton";
 import { getReview, getSlugs } from "@/lib/reviews";
 
-// export async function generateStaticParams() {
-//   const slugs = await getSlugs();
-//   return slugs.map((slug) => ({ slug }));
-// }
+export async function generateStaticParams() {
+  const slugs = await getSlugs();
+  //console.log("[ReviewPage] generateStaticParams", slugs);
+  return slugs.map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({params : {slug}}) {
   const { title } = await getReview(slug);
@@ -16,7 +18,7 @@ export default async function ReviewPage({params : {slug}}) {
   const review = await getReview(slug);
   const {date, image, body, title } = review;
 
-  console.log("[ReviewPage] rendering", review);
+  //console.log("[ReviewPage] rendering", review);
 
   return (
     <>
@@ -25,7 +27,7 @@ export default async function ReviewPage({params : {slug}}) {
         <p className="italic pb-2">{date}</p>
         <ShareLinkButton />
       </div>
-      <img src={image} alt="" 
+      <Image src={image} alt="" priority
         width="640" height="360"
         className="mb-2 rounded"
         />

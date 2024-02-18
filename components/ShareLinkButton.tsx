@@ -12,7 +12,6 @@ export default function ShareLinkButton() {
     setTimeout(() => setClicked(false), 1500);
   }
 
-  console.log("[ShareLinkButton] clicked:", clicked);
   return (
     <button onClick={handleClick}
       className="flex gap-1 items-center border px-2 py-1 rounded
