@@ -42,7 +42,7 @@ export async function getSlugs() {
 
 async function fetchReviews(parameters) {
   const url = `${CMS_URL}/api/reviews?` + qs.stringify(parameters, { encodeValuesOnly: true });
-  console.log("[fetchReviews]:", url);
+  //console.log("[fetchReviews]:", url);
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`CMS returned ${response.status} for ${url}`);
@@ -51,10 +51,11 @@ async function fetchReviews(parameters) {
 }
 
 function toReview(item) {
-  const { attributes: { slug, title, publishedAt, image } } = item ;
+  const { attributes: { slug, title, publishedAt, image, subtitle } } = item ;
   return {
     slug,
     title,
+    subtitle,
     date: publishedAt.slice(0, "yyyy-mm-dd".length),
     image: CMS_URL + image.data.attributes.url
   };

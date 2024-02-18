@@ -16,13 +16,16 @@ export async function generateMetadata({params : {slug}}) {
 
 export default async function ReviewPage({params : {slug}}) {
   const review = await getReview(slug);
-  const {date, image, body, title } = review;
+  const {date, image, body, title, subtitle } = review;
 
   //console.log("[ReviewPage] rendering", review);
 
   return (
     <>
       <Heading>{title}</Heading>
+      <p className="font-semibold pb-3">
+        {subtitle}
+      </p>
       <div className="flex gap-3 items-baseline">
         <p className="italic pb-2">{date}</p>
         <ShareLinkButton />

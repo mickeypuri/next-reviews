@@ -5,6 +5,7 @@ import Image from "next/image";
 
 export default async function HomePage() {
   const reviews = await getReviews(3);
+  //console.log(JSON.stringify(reviews))
 
   //console.log("[Homepage] rendering");
   return (
@@ -22,9 +23,14 @@ export default async function HomePage() {
                   width="320" height="180"
                   className="rounded-t sm:rounded-l sm:rounded-r-none"
                 />
-                <h2 className="font-semibold font-orbitron py-1 text-center sm:px-2">
-                  {review.title}
-                </h2>
+                <div className="px-2 text-center sm:text-left">
+                  <h2 className="font-semibold font-orbitron">
+                    {review.title}
+                  </h2>
+                  <p className="hidden pt-2 sm:block">
+                    {review.subtitle}
+                  </p>
+                </div>
               </Link>
             </li>
         ))}
