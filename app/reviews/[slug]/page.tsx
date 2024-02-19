@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import Heading from "@/components/Heading";
 import ShareLinkButton from "@/components/ShareLinkButton";
 import { getReview, getSlugs } from "@/lib/reviews";
@@ -12,13 +13,20 @@ export const dynamic = "force-dynamic";
 // }
 
 export async function generateMetadata({params : {slug}}) {
-  const { title } = await getReview(slug);
+  const review = await getReview(slug);
+  if (!review) {
+    notFound();
+  }
+  const { title } = review;
   return { title }
 }
 
 export default async function ReviewPage({params : {slug}}) {
   console.log("[ReviewPage] rendering", slug);
   const review = await getReview(slug);
+  if (!review) {
+    notFound();
+  }
   const {date, image, body, title, subtitle } = review;
 
 

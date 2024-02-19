@@ -11,6 +11,9 @@ export async function getReview(slug: string) {
     pagination: { pageSize: 1, withCount: false },
   };
   const { data } = await fetchReviews(parameters);
+  if (data.length === 0) {
+    return null;
+  }
   const item = data[0];
   
   return {
