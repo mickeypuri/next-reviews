@@ -46,7 +46,11 @@ export async function getSlugs() {
 async function fetchReviews(parameters) {
   const url = `${CMS_URL}/api/reviews?` + qs.stringify(parameters, { encodeValuesOnly: true });
   //console.log("[fetchReviews]:", url);
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    next: {
+      revalidate: 30, // seconds
+    }
+  });
   if (!response.ok) {
     console.log(`Error: ${JSON.stringify(response)}`);
     throw new Error(`CMS returned ${response.status} for ${url}`);

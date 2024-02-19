@@ -3,13 +3,13 @@ import Image from "next/image";
 import Heading from "@/components/Heading"
 import { getReviews } from "@/lib/reviews"
 
-export const revalidate = 30; // seconds
+// export const revalidate = 30; // seconds
 
 export const metadata = {
   title: "Reviews",
 };
 
-//export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 export default async function ReviewsPage() {
   const reviews = await getReviews(6);
