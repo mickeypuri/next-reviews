@@ -1,6 +1,8 @@
 import { marked } from "marked";
 import qs from "qs";
 
+export const CACHE_TAG_REVIEWS = "reviews";
+
 const CMS_URL = "http://localhost:1337";
 
 export async function getReview(slug: string) {
@@ -22,15 +24,18 @@ export async function getReview(slug: string) {
   };
 }
 
-export async function getReviews(pageSize) {
+export async function getReviews(pageSize, page?) {
   const parameters = {
     fields: ["slug", "title", "subtitle", "publishedAt",],
     populate: { image: { fields: ["url"] } },
     sort: ["publishedAt:desc"],
-    pagination: { pageSize },
+    pagination: { pageSize, page },
   };
-  const { data } = await fetchReviews(parameters);
-  return data.map(toReview);
+  const { data, meta } = await fetchReviews(parameters);
+  return {
+    pageCount: meta.pagination.pageCount,
+    reviews: data.map(toReview)
+  };
 }
 
 export async function getSlugs() {
@@ -48,7 +53,7 @@ async function fetchReviews(parameters) {
   //console.log("[fetchReviews]:", url);
   const response = await fetch(url, {
     next: {
-      revalidate: 30, // seconds
+      tags: [CACHE_TAG_REVIEWS]
     }
   });
   if (!response.ok) {
