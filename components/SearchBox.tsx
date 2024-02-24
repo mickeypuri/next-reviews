@@ -1,11 +1,12 @@
 "use client";
 
+import { searchReviews } from "@/lib/reviews";
 import { Combobox } from "@headlessui/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { useIsClient } from "@/lib/hooks";
 
-export default function SearchBox({ reviews }) {
+export default function SearchBox() {
 /*   const isClient = useIsClient();
   if (!isClient) {
     return null;
@@ -13,12 +14,24 @@ export default function SearchBox({ reviews }) {
 
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const filtered = reviews.filter((review) => review.title.toLowerCase().includes(query.toLowerCase())).slice(0,5);
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    if (query.length > 1) {
+      (async () => {
+        const reviews = await searchReviews(query);
+        setReviews(reviews);
+      })();
+    } else {
+      setReviews([])
+    }
+  }, [query]);
+
   const handleChange = (review) => {
     //console.log("selected:", review);
     router.push(`/reviews/${review.slug}`);
   };
 
+  //const filtered = reviews.filter((review) => review.title.toLowerCase().includes(query.toLowerCase())).slice(0,5);
   //console.log("[SearchBox] query:", query);
   
   return (
@@ -31,7 +44,7 @@ export default function SearchBox({ reviews }) {
           className="border px-2 py-1 rounded w-full"
         />
         <Combobox.Options className="absolute bg-white py-1">
-          {filtered.map((review) => (
+          {reviews.map((review) => (
             <Combobox.Option key={review.slug} value={review}>
               {({ active }) => (
                 <span className={`block px-2 truncate cursor-pointer ${active ? "bg-orange-100" : ""}`}>

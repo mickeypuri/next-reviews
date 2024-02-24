@@ -38,6 +38,17 @@ export async function getReviews(pageSize, page?) {
   };
 }
 
+export async function searchReviews(query) {
+  const parameters = {
+    filters: { title: { $containsi: query } },
+    fields: ["slug", "title"],
+    sort: ["title"],
+    pagination: { pageSize: 5 },
+  };
+  const { data } = await fetchReviews(parameters);
+  return data.map(({attributes: {slug, title}}) => ({slug, title}));
+}
+
 export async function getSearchableReviews() {
   const parameters = {
     fields: ["slug", "title"],
