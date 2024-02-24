@@ -37,6 +37,7 @@ export default function SearchBox() {
     router.push(`/reviews/${review.slug}`);
   };
 
+
   //const filtered = reviews.filter((review) => review.title.toLowerCase().includes(query.toLowerCase())).slice(0,5);
   //console.log("[SearchBox] query:", {query, debouncedQuery});
   
