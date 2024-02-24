@@ -38,6 +38,16 @@ export async function getReviews(pageSize, page?) {
   };
 }
 
+export async function getSearchableReviews() {
+  const parameters = {
+    fields: ["slug", "title"],
+    sort: ["publishedAt:desc"],
+    pagination: { pageSize: 100 },
+  };
+  const { data } = await fetchReviews(parameters);
+  return data.map(({attributes: {slug, title}}) => ({slug, title}));
+}
+
 export async function getSlugs() {
   const parameters = {
     fields: ["slug"],
