@@ -5,7 +5,8 @@ import qs from "qs";
 
 export const CACHE_TAG_REVIEWS = "reviews";
 
-const CMS_URL = "http://localhost:1337";
+const CMS_URL = process.env.CMS_URL;
+console.log("CMS_URL", CMS_URL);
 
 export async function getReview(slug: string) {
   const parameters = {
