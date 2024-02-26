@@ -6,15 +6,15 @@ const db = new PrismaClient({
 
 const comment = await db.comment.create({
   data: {
-    slug: 'stardew-valley',
-    user: "Bob",
-    message: "Test Message 3",
+    slug: 'fall-guys',
+    user: "Dan",
+    message: "A new message",
   }
 });
 
 console.log("created:", comment);
 
-const comments = await db.comment.findMany({
-  where: {slug: "fall-guys"},
-});
-console.log("comments:", comments);
+// const comments = await db.comment.findMany({
+//   where: {slug: "fall-guys"},
+// });
+// console.log("comments:", comments);
