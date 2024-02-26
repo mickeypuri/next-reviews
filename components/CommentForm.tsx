@@ -1,4 +1,5 @@
 import { createComment } from "@/lib/comments";
+import { redirect } from "next/navigation";
 
 export interface CommentFormProps {
   title: string;
@@ -16,6 +17,7 @@ export default function CommentForm({ title, slug }: CommentFormProps) {
       message: formData.get("message")
     });
     console.log("created:", result);
+    redirect(`/reviews/${slug}`);
   }
 
   return (
