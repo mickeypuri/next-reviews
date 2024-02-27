@@ -1,6 +1,4 @@
-import { createComment } from "@/lib/comments";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { createCommentAction } from "@/app/reviews/[slug]/actions";
 
 export interface CommentFormProps {
   title: string;
@@ -8,35 +6,25 @@ export interface CommentFormProps {
 }
 
 export default function CommentForm({ title, slug }: CommentFormProps) {
-  async function action(formData: FormData) {
-    "use server";
-    console.log("[action] user:", formData.get("user"));
-    console.log("[action] message:", formData.get("message"));
-    const result = await createComment({
-      slug,
-      user: formData.get("user"),
-      message: formData.get("message")
-    });
-    console.log("created:", result);
-    revalidatePath(`/reviews/${slug}`);
-  }
+
 
   return (
-    <form action={action} className="border bg-white flex flex-col gap-2 mt-3 px-3 py-3 rounded">
+    <form action={createCommentAction} className="border bg-white flex flex-col gap-2 mt-3 px-3 py-3 rounded">
       <p className="pb-1">
         Already played <strong>{title}</strong>? Have your say!
       </p>
+      <input type="hidden" name="slug" value={slug} />
       <div className="flex">
         <label htmlFor="userField" className="shrink-0 w-32">
           Your name
         </label>
-        <input id="userField" name="user" className="border px-2 py-1 rounded w-48" />
+        <input id="userField" name="user" className="border px-2 py-1 rounded w-48" required maxLength={50} />
       </div>
       <div className="flex">
         <label htmlFor="messageField"  className="shrink-0 w-32">
           Your comment
         </label>
-        <textarea id="messageField" name="message" className="border px-2 py-1 rounded w-full" />
+        <textarea id="messageField" name="message" className="border px-2 py-1 rounded w-full" required maxLength={500} />
       </div>
       <button type="submit"
         className="bg-orange-800 rounded px-2 py-1 self-center
