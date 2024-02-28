@@ -10,19 +10,20 @@ export interface CommentFormProps {
 }
 
 export default function CommentForm({ title, slug }: CommentFormProps) {
-  const [error, setError] = useState(null);
+  const [state, setState] = useState({loading: false, error: null});
 
   const handleSubmit: FormEventHandler = async (event) => {
     event.preventDefault();
-    setError(null);
+    setState({loading: true, error: false});
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
     console.log("formData:", [...formData.entries()]);
     const result = await createCommentAction(formData);
     if (result?.isError) {
-      setError(result);
+      setState({loading: false, error: result});
     } else {
       form.reset();
+      setState({ loading: false, error: null})
     }
   }
 
@@ -44,12 +45,13 @@ export default function CommentForm({ title, slug }: CommentFormProps) {
         </label>
         <textarea id="messageField" name="message" className="border px-2 py-1 rounded w-full"  />
       </div>
-      {Boolean(error) && (
-        <p className="text-red-800">{error.message}</p>
+      {Boolean(state.error) && (
+        <p className="text-red-800">{state.error.message}</p>
       )}
-      <button type="submit"
+      <button type="submit" disabled={state.loading}
         className="bg-orange-800 rounded px-2 py-1 self-center
-                   text-slate-50 w-32 hover:bg-orange-700">
+                   text-slate-50 w-32 hover:bg-orange-700
+                   disabled:bg-slate-500 disabled:cursor-not-allowed">
         Submit
       </button>
     </form>
