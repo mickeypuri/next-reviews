@@ -1,9 +1,10 @@
 "use server";
+import { ActionError } from "@/lib/actions";
 import type { CreateCommentData } from '@/lib/comments';
 import { createComment } from "@/lib/comments";
 import { revalidatePath } from "next/cache";
 
-export async function createCommentAction(formData: FormData) {
+export async function createCommentAction(formData: FormData) : Promise<undefined | ActionError> {
 
   const data : CreateCommentData = {
     slug: formData.get("slug") as string,
@@ -15,7 +16,6 @@ export async function createCommentAction(formData: FormData) {
   if (error) {
     return { isError: true, message: error}
   }
-
 
   const result = await createComment(data);
   console.log("created:", result);
