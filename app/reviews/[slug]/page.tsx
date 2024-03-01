@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from 'next';
 import Image from "next/image";
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/outline';
@@ -57,7 +58,9 @@ export default async function ReviewPage({params : {slug}}) {
           Comments
         </h2>
         <CommentForm slug={ slug } title={title} />
-        <CommentList slug={ slug } />
+        <Suspense fallback={<p>Loading ...</p>}>
+          <CommentList slug={ slug } />
+        </Suspense>
       </section>
     </>
   )
