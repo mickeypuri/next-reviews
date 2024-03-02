@@ -3,6 +3,7 @@ import { ActionError } from "@/lib/actions";
 import type { CreateCommentData } from '@/lib/comments';
 import { createComment } from "@/lib/comments";
 import { revalidatePath } from "next/cache";
+import { redirect } from 'next/navigation';
 
 export async function createCommentAction(formData: FormData) : Promise<undefined | ActionError> {
 
@@ -20,6 +21,7 @@ export async function createCommentAction(formData: FormData) : Promise<undefine
   const result = await createComment(data);
   console.log("created:", result);
   revalidatePath(`/reviews/${data.slug}`);
+  redirect(`/reviews/${data.slug}`);
 }
 
 function validate(data: CreateCommentData): string | undefined {
