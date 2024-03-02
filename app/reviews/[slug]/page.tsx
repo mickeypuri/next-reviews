@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import Heading from "@/components/Heading";
 import ShareLinkButton from "@/components/ShareLinkButton";
 import { getReview, getSlugs } from "@/lib/reviews";
+import CommentListSkeleton from "@/components/CommentListSkeleton";
 
 //export const dynamic = "force-dynamic";
 
@@ -58,7 +59,7 @@ export default async function ReviewPage({params : {slug}}) {
           Comments
         </h2>
         <CommentForm slug={ slug } title={title} />
-        <Suspense fallback={<p>Loading ...</p>}>
+        <Suspense fallback={<CommentListSkeleton />}>
           <CommentList slug={ slug } />
         </Suspense>
       </section>
